@@ -5,7 +5,7 @@ Automatically claim Forza Rewards. Requires a valid authentication token.
 
 Usage
 -----
-```bash
+```
 usage: rewards.py [-h] [--webhook WEBHOOK] [--daemon] [--interval INTERVAL]
                   token
 
