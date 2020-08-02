@@ -12,7 +12,7 @@ usage: rewards.py [-h] [--webhook WEBHOOK] [--daemon] [--interval INTERVAL]
 Forza Reward Bot
 
 positional arguments:
-  cookie                Cookies
+  cookies               Cookies
 
 optional arguments:
   -h, --help            show this help message and exit
