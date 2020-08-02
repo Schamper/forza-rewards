@@ -18,21 +18,19 @@ MSG = {
 
 
 class ForzaBot(object):
-    def __init__(self, token, webhook=None, interval=43200):
-        self.token = token
+    def __init__(self, cookies, webhook=None, interval=43200):
+        self.cookies = cookies
         self.webhook = webhook
         self.interval = interval
-
-        self.cookies = 'xlaWebAuth_1={}'.format(self.token)
 
     def check(self):
         f = req(URL, cookies=self.cookies)
 
         if f.url != URL:
             if 'auth' in f.url:
-                self.notify("Token expired")
+                self.notify("Cookies expired")
             else:
-                self.notify("Failed to check Rewards - {:d}: {}".format(f.code, f.msg))
+                self.notify("Failed to check Rewards - {:d}: {} - {}".format(f.code, f.msg, f.url))
             return
 
         content = f.read()
@@ -48,7 +46,11 @@ class ForzaBot(object):
                     self.notify("Failed to claim rewards - {:d}: {} ({})".format(f.code, f.msg, f.read()))
             else:
                 match = re.search("data-previous='\d+' data-current='(\d)+'", content)
-                self.notify("{} days left until rewards".format(int(match.group(1))))
+                if match:
+                    self.notify("{} days left until rewards".format(int(match.group(1))))
+                else:
+                    match = re.search("\"new-rewards\">(.+)</div>", content)
+                    self.notify(match.group(1))
         except Exception:
             self.notify("Failed to parse response: \n```python\n{}\n```".format(traceback.format_exc()))
 
@@ -86,11 +88,11 @@ def req(url, data=None, cookies=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Forza Reward Bot")
-    parser.add_argument('token', help="Authentication token")
+    parser.add_argument('cookies', help="Cookies")
     parser.add_argument('--webhook', type=str, help="Webhook to send notifications to")
     parser.add_argument('--daemon', '-d', action='store_true', default=False, help="Run as daemon")
     parser.add_argument('--interval', '-i', type=int, default=43200, help="Interval for checks when running in daemon mode. A random amount of between 2 and 4 hours is added on top")
     args = parser.parse_args()
 
-    bot = ForzaBot(args.token, args.webhook, args.interval)
+    bot = ForzaBot(args.cookies, args.webhook, args.interval)
     bot.run(args.daemon)
