@@ -1,18 +1,18 @@
 Forza Rewards
 =============
 
-Automatically claim Forza Rewards. Requires a valid authentication token.
+Automatically claim Forza Rewards. Requires a valid cookie.
 
 Usage
 -----
 ```
 usage: rewards.py [-h] [--webhook WEBHOOK] [--daemon] [--interval INTERVAL]
-                  token
+                  cookies
 
 Forza Reward Bot
 
 positional arguments:
-  token                 Authentication token
+  cookie                Cookies
 
 optional arguments:
   -h, --help            show this help message and exit
