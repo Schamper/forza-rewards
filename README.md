@@ -3,6 +3,8 @@ Forza Rewards
 
 Automatically claim Forza Rewards. Requires a valid cookie.
 
+__Deprecated, [Forza Rewards is being discontinued](https://support.forzamotorsport.net/hc/en-us/articles/4405566679315-Forza-Rewards)__
+
 Usage
 -----
 ```
